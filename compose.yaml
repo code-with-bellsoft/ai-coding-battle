@@ -9,12 +9,34 @@ services:
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U neon -d telemed"]
+      test: ["CMD-SHELL", "pg_isready -U meduser -d telemed"]
       interval: 5s
       timeout: 3s
       retries: 10
     volumes:
       - telemed_pgdata:/var/lib/postgresql/data
+    networks:
+      - telemed_net
+
+  app:
+    container_name: telemed-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: "postgresql://meduser:medpass@postgres:5432/telemed"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    networks:
+      - telemed_net
+
 
 volumes:
   telemed_pgdata:
+
+networks:
+  telemed_net:
+    external: true
