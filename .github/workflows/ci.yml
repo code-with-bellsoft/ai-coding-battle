@@ -196,12 +196,19 @@ jobs:
           done
           curl -fsS http://localhost:8080/ || (echo "App didn't start" && tail -n 200 app.log && exit 1)
 
+      - name: Fix ZAP workspace permissions
+        run: |
+          touch zap.yaml
+          chmod a+rw zap.yaml
+          chmod -R a+rwX .
+
       - name: OWASP ZAP Baseline Scan
-        uses: zaproxy/action-baseline@v0.12.0
+        uses: zaproxy/action-baseline@v0.15.0
         with:
           target: "http://localhost:8080/"
           fail_action: false
           allow_issue_writing: false
+          artifact_name: "zap-scan"
 
       - name: Upload app log
         uses: actions/upload-artifact@v4
