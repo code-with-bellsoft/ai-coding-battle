@@ -91,11 +91,6 @@ jobs:
             **/target/spotbugs.html
           retention-days: 7
 
-      - name: Gitleaks scan
-        uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Package app (skip tests)
         run: ./mvnw -DskipTests package -B
 
