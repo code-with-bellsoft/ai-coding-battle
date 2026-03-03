@@ -109,6 +109,9 @@ jobs:
           cache: true
 
       - name: Trivy scan SBOM
+        env:
+          TRIVY_DB_REPOSITORY: ghcr.io/aquasecurity/trivy-db:2
+          TRIVY_JAVA_DB_REPOSITORY: ghcr.io/aquasecurity/trivy-java-db:1
         run: |
           SBOM="target/app-sbom.json"
           echo "Using SBOM: $SBOM"
