@@ -28,7 +28,6 @@
 - OWASP ZAP Baseline
 - Apache Maven PMD Plugin
 - SpotBugs Maven Plugin
-- Gitleaks
 - Trivy
 - JaCoCo
 
