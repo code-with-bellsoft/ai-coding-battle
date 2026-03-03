@@ -99,6 +99,41 @@ jobs:
       - name: Package app (skip tests)
         run: ./mvnw -DskipTests package -B
 
+      - name: Upload SBOM (CycloneDX JSON)
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: app-sbom
+          path: |
+            **/target/app-sbom.json
+          retention-days: 30
+
+      - name: Setup Trivy
+        uses: aquasecurity/setup-trivy@v0.2.0
+        with:
+          cache: true
+
+      - name: Trivy scan SBOM
+        run: |
+          # Find the SBOM regardless of module layout
+          SBOM="$(ls -1 **/target/app-sbom.json | head -n 1)"
+          echo "Using SBOM: $SBOM"
+
+          trivy sbom "$SBOM" \
+            --scanners vuln \
+            --severity HIGH,CRITICAL \
+            --exit-code 0 \
+            --format json \
+            --output trivy-sbom.json
+
+      - name: Upload Trivy SBOM report artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: trivy-sbom-report
+          path: trivy-sbom.json
+          retention-days: 30
+
       - name: Start app for ZAP scan
         run: |
           JAR="$(ls -1 target/*.jar | head -n 1)"
