@@ -110,9 +110,9 @@ jobs:
 
       - name: Trivy scan SBOM
         run: |
-          # Find the SBOM regardless of module layout
-          SBOM="$(ls -1 **/target/app-sbom.json | head -n 1)"
+          SBOM="target/app-sbom.json"
           echo "Using SBOM: $SBOM"
+          test -f "$SBOM" || (echo "SBOM not found at $SBOM" && ls -la target && exit 1)
 
           trivy sbom "$SBOM" \
             --scanners vuln \
