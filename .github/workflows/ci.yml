@@ -2,12 +2,12 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
     paths:
       - "**"
       - ".github/workflows/ci.yml"
   pull_request:
-    branches: [main]
+    branches: [ main ]
     paths:
       - "**"
       - ".github/workflows/ci.yml"
@@ -168,3 +168,26 @@ jobs:
             report_md.md
             report_json.json
           retention-days: 7
+
+      - name: Extract runtime base image (last FROM) from Dockerfile
+        id: runtimeimg
+        run: |
+          RUNTIME_IMAGE="$(awk 'toupper($1)=="FROM"{img=$2} END{print img}' Dockerfile)"
+          echo "Runtime base image: $RUNTIME_IMAGE"
+          echo "runtime_image=$RUNTIME_IMAGE" >> "$GITHUB_OUTPUT"
+
+      - name: OSV-Scanner (runtime base image only)
+        uses: google/osv-scanner-action@v2
+        with:
+          scan-args: |-
+            --format=json
+            --output=osv-runtime-base-image.json
+            scan image ${{ steps.runtimeimg.outputs.runtime_image }}
+
+      - name: Upload OSV runtime base image report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: osv-runtime-base-image-report
+          path: osv-runtime-base-image.json
+          retention-days: 30
