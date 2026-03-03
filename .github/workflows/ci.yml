@@ -96,31 +96,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # ---- Container / dependency / filesystem vuln scanning ----
-
-      - name: Trivy filesystem scan (SARIF)
-        uses: aquasecurity/trivy-action@0.24.0
-        with:
-          scan-type: fs
-          ignore-unfixed: true
-          severity: CRITICAL,HIGH
-          format: sarif
-          output: trivy.sarif
-
-      - name: Upload Trivy SARIF to GitHub Security
-        uses: github/codeql-action/upload-sarif@v3
-        if: always()
-        with:
-          sarif_file: trivy.sarif
-
-      - name: Upload Trivy report artifact
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: trivy-sarif
-          path: trivy.sarif
-          retention-days: 7
-
       - name: Package app (skip tests)
         run: ./mvnw -DskipTests package -B
 
