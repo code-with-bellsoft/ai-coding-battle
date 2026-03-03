@@ -177,7 +177,7 @@ jobs:
           echo "runtime_image=$RUNTIME_IMAGE" >> "$GITHUB_OUTPUT"
 
       - name: OSV-Scanner (runtime base image only)
-        uses: google/osv-scanner-action@v2
+        uses: "google/osv-scanner-action/.github/workflows/osv-scanner-reusable-pr.yml@v2.3.3"
         with:
           scan-args: |-
             --format=json
