@@ -6,6 +6,7 @@
 
 - Java 25
 - Spring Boot 4.x
+- Maven
 - GitHub Copilot
 - VSCode
 
