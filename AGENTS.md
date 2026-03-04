@@ -1,0 +1,4 @@
+- Write tests for all features
+- Search and use newest versions of dependencies
+- Prefer simple code over elegant code
+- Always test your changes by compiling and running the application. Make sure the change works as intended.
