@@ -37,3 +37,10 @@ build/
 .vscode/
 
 .DS_Store
+
+### Performance Tests ###
+performance-tests/results/
+performance-tests/report/
+performance-tests/results.jtl
+performance-tests/jmeter.log
+*.jtl
