@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Healthcare Assistant - Performance Test" enabled="true">
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+      <booleanProp name="TestPlan.serialize_threadgroups">false</booleanProp>
+      <booleanProp name="TestPlan.tearDown_on_shutdown">true</booleanProp>
+      <booleanProp name="TestPlan.functional_mode">false</booleanProp>
+      <stringProp name="TestPlan.comments">This test plan simulates 50 users analyzing symptoms concurrently to measure response times.</stringProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Symptom Analysis Thread Group" enabled="true">
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <booleanProp name="LoopController.continue_forever">false</booleanProp>
+          <stringProp name="LoopController.loops">10</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">50</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">30</stringProp>
+        <elementProp name="ThreadGroup.scheduler" elementType="elementProp" name="ThreadGroup.scheduler" enabled="false">
+          <booleanProp name="TestPlan.tearDown_on_shutdown">true</booleanProp>
+          <booleanProp name="TestPlan.functional_mode">false</booleanProp>
+          <stringProp name="ThreadGroup.duration">120</stringProp>
+          <stringProp name="ThreadGroup.delay">0</stringProp>
+        </elementProp>
+        <booleanProp name="ThreadGroup.same_user_on_next_iteration">true</booleanProp>
+        <booleanProp name="ThreadGroup.scheduler">false</booleanProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="HTTP Request Defaults" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">localhost</stringProp>
+          <stringProp name="HTTPSampler.port">8080</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path"></stringProp>
+          <stringProp name="HTTPSampler.concurrentPool">4</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </ConfigTestElement>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST /api/analyze-symptoms" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="symptoms" elementType="HTTPArgument">
+                <booleanProp name="HTTPArgument.always_encode">true</booleanProp>
+                <stringProp name="Argument.name">symptoms</stringProp>
+                <stringProp name="Argument.value">I have a headache, fever, and sore throat. It started 2 days ago and I feel tired.</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <booleanProp name="HTTPArgument.use_equals">true</booleanProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/api/analyze-symptoms</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <booleanProp name="HTTPSampler.follow_redirects">true</booleanProp>
+          <booleanProp name="HTTPSampler.auto_redirects">false</booleanProp>
+          <booleanProp name="HTTPSampler.use_keepalive">true</booleanProp>
+          <booleanProp name="HTTPSampler.DO_MULTIPART_POST">false</booleanProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+          <collectionProp name="Asserion.test_type">
+            <stringProp name="1852830135">Assertion.response_code</stringProp>
+          </collectionProp>
+          <collectionProp name="assert_patterns">
+            <stringProp name="49586">200</stringProp>
+          </collectionProp>
+          <booleanProp name="Assertion.assume_success">false</booleanProp>
+          <intProp name="Assertion.test_type">1</intProp>
+        </ResponseAssertion>
+        <hashTree/>
+        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+          <booleanProp name="ResultCollector.error_logging">false</booleanProp>
+          <objProp>
+            <name>exclude_patterns</name>
+            <value class="java.util.HashSet"/>
+          </objProp>
+          <objProp>
+            <name>include_patterns</name>
+            <value class="java.util.HashSet"/>
+          </objProp>
+          <stringProp name="ResultCollector.filename">performance-test-results.jtl</stringProp>
+          <booleanProp name="ResultCollector.success_only_logging">false</booleanProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="GraphVisualizer" testclass="ResultCollector" testname="Graph Results" enabled="true">
+          <booleanProp name="ResultCollector.error_logging">false</booleanProp>
+          <objProp>
+            <name>exclude_patterns</name>
+            <value class="java.util.HashSet"/>
+          </objProp>
+          <objProp>
+            <name>include_patterns</name>
+            <value class="java.util.HashSet"/>
+          </objProp>
+          <stringProp name="ResultCollector.filename"></stringProp>
+          <booleanProp name="ResultCollector.success_only_logging">false</booleanProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
