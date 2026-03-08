@@ -51,8 +51,8 @@ One at a time, review between each.
 
 ## Results of Live Stream
 [YouTube](https://www.youtube.com/live/ukcQcDXhot4) | 
-[LinkedIn](https://www.youtube.com/live/ukcQcDXhot4](https://www.linkedin.com/posts/johannes-rabauer_live-vibe-coding-battle-build-a-java-app-ugcPost-7435399910750961664-2Rzi) | 
-[Twitter](https://www.youtube.com/live/ukcQcDXhot4](https://x.com/i/broadcasts/1dJrPErjXvYKX?s=20)
+[LinkedIn](https://www.linkedin.com/posts/johannes-rabauer_live-vibe-coding-battle-build-a-java-app-ugcPost-7435399910750961664-2Rzi) | 
+[Twitter](https://x.com/i/broadcasts/1dJrPErjXvYKX?s=20)
 
 [Results of **One-Shot Prompt**](https://github.com/code-with-bellsoft/ai-coding-battle/actions/runs/22734664933)
 
