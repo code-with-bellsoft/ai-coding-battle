@@ -1,0 +1,98 @@
+# Git files
+.git
+.gitignore
+.gitattributes
+
+# IDE files
+.idea
+.vscode
+*.swp
+*.swo
+*~
+.DS_Store
+.classpath
+.project
+.settings
+.springBeans
+*.iml
+*.iws
+*.ipr
+
+# Build artifacts
+target
+dist
+build
+*.o
+*.a
+*.so
+*.pyc
+
+# Maven
+.m2
+*.log
+
+# Node/npm (for frontend)
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Gradle
+.gradle
+gradle
+
+# Docker/container files
+Dockerfile
+.dockerignore
+docker-compose.yml
+docker-compose.yaml
+.docker
+
+# CI/CD
+.github
+.gitlab-ci.yml
+.travis.yml
+.circleci
+azure-pipelines.yml
+Jenkinsfile
+
+# Documentation
+*.md
+docs
+README.md
+CONTRIBUTING.md
+CODE_OF_CONDUCT.md
+LICENSE
+
+# Performance tests
+performance-tests
+*.jmx
+jmeter.log
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# OS files
+Thumbs.db
+.DS_Store
+*.tmp
+*.bak
+
+# Testing
+coverage
+.nyc_output
+junit-reports
+test-results
+allure-results
+
+# Application files
+*.log
+*.pid
+*.seed
+*.pid.lock
+
+# Temporary files
+tmp
+temp
+*.tmp
